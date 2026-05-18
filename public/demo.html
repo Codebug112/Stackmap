@@ -362,6 +362,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 
       <div class="map-area">
         <div class="map-topbar">
+          <button onclick="showStep(2)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);font-family:var(--font-mono);font-size:11px;border-radius:5px;padding:5px 11px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-bright)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">&#8592; Back</button>
           <input class="map-search" id="map-search" placeholder="Search your stack..." oninput="searchStack(this.value)"/>
           <div class="map-meta">
             <div class="updated-tag"><span class="pulse-dot"></span>Last updated: just now</div>
@@ -530,7 +531,7 @@ function runLoader(){
     const ni=Math.floor((elapsed/4000)*msgs.length);
     if(ni!==msgIdx&&ni<msgs.length){
       msgIdx=ni;msgEl.style.opacity='0';
-      setTimeout(()=>{msgEl.textContent=msgs[msgIdx];msgEl.style.opacity='1';},150);
+      setTimeout(()=>{msgEl.textContent=msgs[msgIdx];msgEl.style.opacity='1';},310);
     }
     counterEl.textContent=Math.floor((elapsed/4000)*target).toLocaleString();
     if(elapsed>=4000){clearInterval(t);fillEl.style.width='100%';counterEl.textContent=target.toLocaleString();setTimeout(()=>buildAndShowMap(),200);}
@@ -625,14 +626,14 @@ function drawToolNode(layer,pos,tool,init,status,idx){
   g.setAttribute('cursor','pointer');g.id='node-group-'+idx;
   if(status==='broken')g.classList.add('broken-node-group');
   const circ=document.createElementNS('http://www.w3.org/2000/svg','circle');
-  circ.setAttribute('cx',pos.x);circ.setAttribute('cy',pos.y);circ.setAttribute('r','22');
-  circ.setAttribute('fill',c.fill);circ.setAttribute('stroke',c.stroke);circ.setAttribute('stroke-width','2');
+  circ.setAttribute('cx',pos.x);circ.setAttribute('cy',pos.y);circ.setAttribute('r','24');
+  circ.setAttribute('fill',tool.bg);circ.setAttribute('stroke',c.stroke);circ.setAttribute('stroke-width','2.5');
   circ.classList.add('node-circle');if(c.f)circ.setAttribute('filter',c.f);
   const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
   txt.setAttribute('x',pos.x);txt.setAttribute('y',pos.y+1);txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
-  txt.setAttribute('fill',tool.color);txt.setAttribute('font-size','9');txt.setAttribute('font-family','JetBrains Mono,monospace');txt.textContent=init;
+  txt.setAttribute('fill',tool.color);txt.setAttribute('font-size','13');txt.setAttribute('font-family','JetBrains Mono,monospace');txt.setAttribute('font-weight','600');txt.textContent=init;
   const lbl=document.createElementNS('http://www.w3.org/2000/svg','text');
-  lbl.setAttribute('x',pos.x);lbl.setAttribute('y',pos.y+36);lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
+  lbl.setAttribute('x',pos.x);lbl.setAttribute('y',pos.y+38);lbl.setAttribute('text-anchor','middle');lbl.setAttribute('dominant-baseline','middle');
   lbl.setAttribute('fill','#c8d8e8');lbl.setAttribute('font-size','10');lbl.setAttribute('font-family','Inter,sans-serif');
   lbl.textContent=tool.name.length>10?tool.name.slice(0,9)+'…':tool.name;
   g.appendChild(circ);g.appendChild(txt);g.appendChild(lbl);
