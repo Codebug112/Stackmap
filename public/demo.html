@@ -38,11 +38,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 @keyframes barfill{from{width:0}to{width:100%}}
 
 /* ── TOP BANNER ── */
-#demo-banner{position:fixed;top:0;left:0;right:0;z-index:200;height:38px;background:var(--surface2);border-bottom:1px solid var(--border-bright);display:flex;align-items:center;justify-content:space-between;padding:0 20px;opacity:0;pointer-events:none;transition:opacity .4s}
+#demo-banner{position:fixed;top:0;left:0;right:0;z-index:200;height:52px;background:var(--surface2);border-bottom:1px solid var(--border-bright);display:flex;align-items:center;justify-content:space-between;padding:0 24px;opacity:0;pointer-events:none;transition:opacity .4s}
 #demo-banner.show{opacity:1;pointer-events:all}
 .banner-text{font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
 .banner-text strong{color:var(--text)}
-.banner-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;color:#000;background:var(--accent);border:none;border-radius:5px;padding:6px 14px;cursor:pointer;text-decoration:none;transition:opacity .15s;letter-spacing:.2px}
+.banner-btn{font-family:var(--font-mono);font-size:13px;font-weight:600;color:#000;background:var(--accent);border:none;border-radius:6px;padding:9px 20px;cursor:pointer;text-decoration:none;transition:opacity .15s;letter-spacing:.2px}
 .banner-btn:hover{opacity:.85}
 
 /* ── STEPS ── */
@@ -64,7 +64,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 .step1-note{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);margin-top:12px;text-align:center}
 
 /* ── STEP 2 ── */
-#step2{padding:44px 32px 16px;justify-content:flex-start;align-items:center;height:100vh;overflow:hidden}
+#step2{padding:58px 32px 16px;justify-content:flex-start;align-items:center;height:100vh;overflow:hidden}
 #step2 .step-indicator{margin-bottom:16px}
 #step2 h2{font-family:var(--font-display);font-size:clamp(20px,2.4vw,32px);font-weight:800;color:var(--text-bright);text-align:center;margin-bottom:4px;letter-spacing:-1px}
 #step2 .sub{font-family:var(--font-body);font-size:12px;color:var(--text-dim);text-align:center;margin-bottom:14px;max-width:440px;line-height:1.5}
@@ -103,7 +103,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 .sidebar.collapsed{width:52px;min-width:52px}
 .sidebar-toggle{position:absolute;top:10px;right:8px;width:22px;height:22px;background:var(--surface2);border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;color:var(--text-dim);font-size:11px;font-family:var(--font-mono);transition:all .15s}
 .sidebar-toggle:hover{border-color:var(--border-bright);color:var(--text-bright)}
-.sidebar-content{padding:14px 12px;display:flex;flex-direction:column;overflow-y:auto;flex:1;min-width:248px}
+.sidebar-content{padding:14px 12px;display:flex;flex-direction:column;overflow-y:auto;flex:1;min-width:248px;min-height:0}
 .sidebar.collapsed .sidebar-content{display:none}
 .sidebar.collapsed .icon-rail{display:flex}
 .icon-rail{display:none;flex-direction:column;align-items:center;padding:14px 0;gap:8px}
@@ -272,7 +272,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 <!-- TOP BANNER -->
 <div id="demo-banner">
   <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— Example data only. Not connected to a real stack.</div>
-  <a href="/" class="banner-btn">Join the real waitlist &rarr;</a>
+  <a href="/join" class="banner-btn">Join the real waitlist &rarr;</a>
 </div>
 
 <div id="app">
@@ -356,6 +356,21 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
               <div class="status-line"><span style="color:var(--text-dim)">●</span><span style="color:var(--text-dim)">1 Unmonitored</span></div>
             </div>
             <div class="add-tool-btn" onclick="openAddModal()">+ Add integration</div>
+          </div>
+        </div>
+        <div id="sidebar-footer" style="border-top:1px solid var(--border);padding:10px 12px;flex-shrink:0">
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">// ACCOUNT</div>
+          <div id="domain-display" style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="showToast('Account settings available in the full product — join the waitlist for early access.')">
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">[ My Account ]</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="showToast('Settings available in the full product — join the waitlist for early access.')">
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">[ Settings ]</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="window.location.href='/join'">
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent)">[ Join Waitlist ]</span>
+            </div>
           </div>
         </div>
       </div>
@@ -466,11 +481,17 @@ const CONN_DEFS=[
 let selectedTools=[],currentStep=1,mapScale=1,domain='',popupExpanded=false,sidebarCollapsed=false;
 
 window.addEventListener('load',()=>{
+  const urlDomain=new URLSearchParams(window.location.search).get('domain');
+  if(urlDomain){domain=urlDomain;document.getElementById('domain-input').value=urlDomain;}
   setTimeout(()=>{
     const o=document.getElementById('modal-overlay');
     o.classList.add('hide');
-    setTimeout(()=>{o.style.display='none';document.getElementById('demo-banner').classList.add('show');},500);
-  },4000);
+    setTimeout(()=>{
+      o.style.display='none';
+      document.getElementById('demo-banner').classList.add('show');
+      if(urlDomain)goToStep2();
+    },500);
+  },urlDomain?800:4000);
   buildToolGrid('tools-grid');
   buildToolGrid('add-tools-grid');
   document.getElementById('domain-input').addEventListener('keydown',e=>{if(e.key==='Enter')goToStep2();});
@@ -538,7 +559,11 @@ function runLoader(){
   },80);
 }
 
-function buildAndShowMap(){showStep(4);buildSidebarToolList();buildMapSVG();}
+function buildAndShowMap(){
+  showStep(4);buildSidebarToolList();buildMapSVG();
+  const dd=document.getElementById('domain-display');
+  if(dd)dd.textContent=domain||'yourcompany.com';
+}
 
 function getToolStatuses(){
   const s={};selectedTools.forEach((_,i)=>s[i]='healthy');
@@ -682,7 +707,7 @@ function buildSimilarIssues(){
 }
 
 function buildOverviewCard(){
-  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildNodeCard(tool,status,idx){
@@ -718,7 +743,7 @@ function buildBrokenConnCard(from,to){
 <div class="disclaimer-card"><h4>// If none of the above resolves it</h4>
 <ul><li>Has anyone changed ${from.name} settings in the last 72 hours?</li><li>Did a deploy modify any environment variables?</li><li>Is your ${to.name} account on a plan that supports this trigger?</li><li>Check ${to.name} status page for ongoing incidents.</li></ul></div>
 <div class="reddit-quote"><p>"Our ${from.name} integration broke silently. We found out a week later when a customer asked why they hadn't been onboarded."</p><cite>— Founder, r/SaaS</cite></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildWarnConnCard(from,to){
@@ -741,7 +766,7 @@ function buildWarnConnCard(from,to){
 <div class="fix-step"><div class="fix-step-num">2</div><div class="fix-step-text">In ${to.name}, check your API rate limit tier. A growing event queue usually means you're hitting the rate cap. Upgrading tier typically resolves this within 24 hours.</div></div>
 <div class="fix-step"><div class="fix-step-num">3</div><div class="fix-step-text">If neither applies, the queue backlog itself may be the cause. Manually trigger a full sync resync to clear the backlog, then monitor over the next 6 hours.</div></div>
 <p style="font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-top:10px">Expected outcome: sync time reduced to under 15 minutes after fix</p></div>
-<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildHealthyConnCard(from,to){
@@ -773,7 +798,7 @@ function buildUnmonitoredConnCard(from,to){
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Unmonitored connections are your biggest blind spot — if this breaks, you won't know until a customer tells you.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">71% of integration failures are first reported by end users, not internal teams. (Source: BetterCloud, 2024)</div></div></div>
 <div class="risk-note"><p><strong>Unmonitored = unprotected.</strong> Every day this goes without visibility is another day a silent failure can compound.</p></div>
-<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildBrokenNodeCard(tool){
@@ -788,7 +813,7 @@ function buildBrokenNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// PREVENTION — IN THE FULL PRODUCT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Stakmap would have alerted you within 15 minutes of the first failure — 3 days before you'd have found this manually.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">API key expiry warnings 30 days in advance prevent this class of silent failure entirely.</div></div></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildWarnNodeCard(tool){
@@ -802,7 +827,7 @@ function buildWarnNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// BUSINESS IMPACT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Downstream data is 4+ hours stale — any automation or reporting that reads from the connected tool is running on old data.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">8–12% trial-to-paid conversion improvement is the benchmark when this type of sync delay is resolved (BetterCloud, 2024).</div></div></div>
-<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildHealthyNodeCard(tool){
@@ -812,7 +837,7 @@ function buildHealthyNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// RECOMMENDATIONS</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Schedule an API key renewal reminder for day 60 (29 days from now) to avoid a silent expiry break.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Consider documenting this integration's dependencies — if the owner leaves, this context disappears with them.</div></div></div>
-<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a href="/" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
 }
 
 function buildUnmonitoredCard(tool){

@@ -22,6 +22,14 @@ const posts = [
   {
     tag: "GUIDE",
     date: "May 2026",
+    title: "How to Monitor Your SaaS Integrations (Before Something Breaks)",
+    desc: "A step-by-step guide to auditing your stack, catching silent webhook failures, and fixing broken API connections before your customers find out first.",
+    href: "/blog/how-to-monitor-saas-integrations",
+    readTime: "9 min read",
+  },
+  {
+    tag: "GUIDE",
+    date: "May 2026",
     title: "How to sort out your SaaS integrations in 20 minutes",
     desc: "A step-by-step walkthrough for mapping every tool, finding what's broken, and cutting what's dead — without needing a developer.",
     href: "/integration-audit",
@@ -61,20 +69,22 @@ export default function BlogPage() {
             "blogPost": [
               {
                 "@type": "BlogPosting",
+                "headline": "How to Monitor Your SaaS Integrations (Before Something Breaks)",
+                "description": "A step-by-step guide to auditing your stack, catching silent webhook failures, and fixing broken API connections before your customers find out first.",
+                "url": "https://stakmap.com/blog/how-to-monitor-saas-integrations",
+                "datePublished": "2026-05-01",
+                "author": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
+                "publisher": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
+                "timeRequired": "PT9M"
+              },
+              {
+                "@type": "BlogPosting",
                 "headline": "How to sort out your SaaS integrations in 20 minutes",
                 "description": "A step-by-step walkthrough for mapping every tool, finding what's broken, and cutting what's dead — without needing a developer.",
                 "url": "https://stakmap.com/integration-audit",
                 "datePublished": "2026-05-01",
-                "author": {
-                  "@type": "Organization",
-                  "name": "Stakmap",
-                  "url": "https://stakmap.com"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "Stakmap",
-                  "url": "https://stakmap.com"
-                },
+                "author": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
+                "publisher": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
                 "timeRequired": "PT8M"
               }
             ]

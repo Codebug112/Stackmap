@@ -152,7 +152,7 @@ export function Nav() {
             boxShadow: "0 0 6px var(--accent)",
             display: "inline-block",
           }} />
-          Try Beta
+          Try Beta <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "rgba(0,229,160,0.7)", marginLeft: 2 }}>(&lt;1 min)</span>
         </Link>
       </div>
 

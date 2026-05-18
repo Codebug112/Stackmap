@@ -72,7 +72,7 @@ function Hero() {
                 flexShrink: 0,
               }}
             />
-            ⚡ Beta now live — try the interactive demo
+            Beta now live — try the interactive demo
           </div>
 
           <h1
@@ -114,35 +114,9 @@ function Hero() {
 
           <div className="animate-fade-up-3" id="hero-form">
             <WaitlistForm />
-            <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dim)" }}>or</span>
-              <a
-                href="/demo"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  color: "var(--accent)",
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  border: "1px solid rgba(0,229,160,0.25)",
-                  borderRadius: 6,
-                  padding: "6px 14px",
-                  background: "rgba(0,229,160,0.06)",
-                  transition: "background 0.15s",
-                }}
-              >
-                <span style={{
-                  width: 6, height: 6, borderRadius: "50%",
-                  background: "var(--accent)",
-                  boxShadow: "0 0 5px var(--accent)",
-                  display: "inline-block",
-                  flexShrink: 0,
-                }} />
-                Try the interactive beta demo →
-              </a>
-            </div>
+            <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dim)", marginTop: 10 }}>
+              Enter your domain — no signup, no credit card. Takes under a minute.
+            </p>
           </div>
         </div>
 
