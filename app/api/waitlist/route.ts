@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     // Email is best-effort — don't let Resend failures block the signup
     try {
       await getResend().emails.send({
-        from: "Stackmap <onboarding@resend.dev>",
+        from: "Stackmap <hello@stakmap.com>",
         to: email,
         subject: "You're on the Stackmap waitlist",
         html: `
