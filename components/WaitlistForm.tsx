@@ -140,17 +140,6 @@ export default function WaitlistForm() {
         </button>
       </div>
 
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          color: "var(--text-dim)",
-          marginTop: 8,
-        }}
-      >
-        Free stack audit template included with every signup.
-      </p>
-
       {status === "error" && (
         <p
           style={{

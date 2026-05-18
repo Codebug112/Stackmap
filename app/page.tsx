@@ -18,6 +18,41 @@ const tickerItems = [
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Stakmap",
+            "url": "https://stakmap.com",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "description": "Stakmap gives you a live map of your entire SaaS stack — every webhook, Zapier flow, and API key — so you know what's connected, what's breaking, and what's safe to cut.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "description": "Join the waitlist for early access"
+            },
+            "featureList": [
+              "Live Integration Map",
+              "Silent Failure Alerts",
+              "Plain English Diagnosis",
+              "Zombie Detector",
+              "API Key Expiry Warnings",
+              "Impact Analysis",
+              "OAuth Token Audit",
+              "SOC2 Audit Export"
+            ],
+            "publisher": {
+              "@type": "Organization",
+              "name": "Stakmap",
+              "url": "https://stakmap.com"
+            }
+          })
+        }}
+      />
       <Nav />
       <Hero />
       <TickerStrip />
@@ -107,8 +142,8 @@ function Hero() {
             }}
           >
             Right now, something in your stack is broken and you don&apos;t know it.
-            Stakmap shows you exactly what, why, and how to fix it — before your
-            customers find out first.
+            Stakmap is an integration monitoring tool that shows you exactly what,
+            why, and how to fix it — before your customers find out first.
           </p>
 
           <div className="animate-fade-up-3" id="hero-form">
@@ -968,7 +1003,7 @@ function FeaturesSection() {
             marginBottom: 56,
           }}
         >
-          Everything you need to own your stack.
+          Everything you need to monitor and manage your integrations.
         </h2>
 
         <div className="grid-4">

@@ -4,24 +4,19 @@ import { Nav } from "@/components/Nav";
 import { StakmapIcon } from "@/components/StakmapIcon";
 
 export const metadata: Metadata = {
-  title: "How to Sort Out Your SaaS Integrations | Free Audit Template — Stakmap",
+  title: "How to Audit Your SaaS Integrations: A Free Template and Checklist — Stakmap",
   description:
     "A free step-by-step guide to auditing your SaaS stack. Find silent failures, map every integration, cut zombie tools. Takes 20 minutes. No technical knowledge required.",
-  keywords: [
-    "how to sort out integrations",
-    "saas integration audit",
-    "fix broken integrations",
-    "integration management",
-    "saas stack audit",
-    "webhook monitoring",
-    "saas tool inventory",
-  ],
+  alternates: { canonical: "/integration-audit" },
   openGraph: {
-    title: "Free SaaS Stack Audit Template — Stakmap",
+    title: "How to Audit Your SaaS Integrations: A Free Template and Checklist",
     description:
       "Map your integrations, find what's broken, cut what's dead. A structured 20-minute audit for founders and ops teams.",
-    type: "website",
+    type: "article",
+    url: "/integration-audit",
+    images: [{ url: "/og-audit.png", width: 1200, height: 630 }],
   },
+  twitter: { card: "summary_large_image" },
 };
 
 // ─── Fake completed data ─────────────────────────────────────────────────────
@@ -159,9 +154,9 @@ function SectionHead({ num, label, title, children }: { num: string; label: stri
         <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--accent)", letterSpacing: "1.5px", textTransform: "uppercase" as const, marginBottom: 4 }}>
           // {label}
         </div>
-        <div style={{ fontFamily: "var(--font-inter)", fontSize: 22, fontWeight: 700, color: "var(--text-bright)", letterSpacing: "-0.5px", marginBottom: 4 }}>
+        <h2 style={{ fontFamily: "var(--font-inter)", fontSize: 22, fontWeight: 700, color: "var(--text-bright)", letterSpacing: "-0.5px", marginBottom: 4, margin: 0 }}>
           {title}
-        </div>
+        </h2>
         <div style={{ fontSize: 13, color: "var(--text-dim)", lineHeight: 1.6 }}>
           {children}
         </div>
@@ -216,6 +211,28 @@ const tdStyle: React.CSSProperties = {
 export default function IntegrationAuditPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "How to Audit Your SaaS Integrations: A Free Template and Checklist",
+            "description": "A free step-by-step guide to auditing your SaaS stack. Find silent failures, map every integration, cut zombie tools. Takes 20 minutes.",
+            "url": "https://stakmap.com/integration-audit",
+            "datePublished": "2026-05-01",
+            "dateModified": "2026-05-01",
+            "author": { "@type": "Organization", "name": "Stakmap", "url": "https://stakmap.com" },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Stakmap",
+              "url": "https://stakmap.com",
+              "logo": { "@type": "ImageObject", "url": "https://stakmap.com/icon.svg" }
+            },
+            "mainEntityOfPage": "https://stakmap.com/integration-audit"
+          })
+        }}
+      />
       <Nav />
 
       <main style={{ paddingTop: 80 }}>
@@ -236,7 +253,7 @@ export default function IntegrationAuditPage() {
               fontWeight: 800, color: "var(--text-bright)", letterSpacing: "-1.5px",
               lineHeight: 1.05, marginBottom: 16,
             }}>
-              How to sort out your<br />
+              How to audit your<br />
               <span style={{ color: "var(--accent)" }}>SaaS integrations</span>
             </h1>
 

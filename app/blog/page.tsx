@@ -5,9 +5,17 @@ import { StakmapIcon } from "@/components/StakmapIcon";
 import { PostCard } from "./PostCard";
 
 export const metadata: Metadata = {
-  title: "Blog — Stakmap",
+  title: "Integration Monitoring Guides & Resources — Stakmap Blog",
   description:
-    "Guides, teardowns, and practical frameworks for founders who want to understand and control their SaaS stack.",
+    "Practical guides on integration monitoring, webhook failures, Zapier management, and SaaS stack visibility. Built for SaaS founders and ops teams.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Integration Monitoring Guides & Resources — Stakmap Blog",
+    description: "Practical guides on integration monitoring, webhook failures, Zapier management, and SaaS stack visibility. Built for SaaS founders and ops teams.",
+    url: "/blog",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 const posts = [
@@ -32,6 +40,47 @@ const COMING = [
 export default function BlogPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "Stakmap Blog",
+            "url": "https://stakmap.com/blog",
+            "description": "Guides, teardowns, and practical frameworks for founders who want to understand and control their SaaS stack.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Stakmap",
+              "url": "https://stakmap.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://stakmap.com/icon.svg"
+              }
+            },
+            "blogPost": [
+              {
+                "@type": "BlogPosting",
+                "headline": "How to sort out your SaaS integrations in 20 minutes",
+                "description": "A step-by-step walkthrough for mapping every tool, finding what's broken, and cutting what's dead — without needing a developer.",
+                "url": "https://stakmap.com/integration-audit",
+                "datePublished": "2026-05-01",
+                "author": {
+                  "@type": "Organization",
+                  "name": "Stakmap",
+                  "url": "https://stakmap.com"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "Stakmap",
+                  "url": "https://stakmap.com"
+                },
+                "timeRequired": "PT8M"
+              }
+            ]
+          })
+        }}
+      />
       <Nav />
 
       <main style={{ paddingTop: 80 }}>

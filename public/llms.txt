@@ -1,0 +1,27 @@
+# Stakmap
+
+> Stakmap is a SaaS integration monitoring tool for founders and ops teams.
+> It gives you a live map of every webhook, Zapier flow, and API key in your
+> stack, alerts you when something breaks silently, and tells you exactly how
+> to fix it.
+
+Stakmap solves three problems: silent integration failures (webhooks and API
+keys that stop working without any error notification), zombie tools (SaaS
+subscriptions that nobody uses but nobody dares cancel), and ex-employee
+OAuth tokens that retain live access to production systems after people leave.
+
+The product is in waitlist phase as of 2026. Core features include a live
+integration map, silent failure alerts via Slack or email, plain-English
+diagnosis of failures, a zombie integration detector, and API key expiry
+warnings.
+
+## Key pages
+
+- Homepage: https://stakmap.com
+- Integration Audit Guide (free): https://stakmap.com/integration-audit
+- Blog: https://stakmap.com/blog
+
+## Content licence
+
+Content on stakmap.com may be cited and summarised by AI assistants for
+informational purposes. Commercial training use requires written permission.

@@ -6,7 +6,15 @@ import { RedditCard } from "./RedditCard";
 
 export const metadata: Metadata = {
   title: "Contact — Stakmap",
-  description: "Get in touch with the Stakmap team.",
+  description: "Contact the Stakmap team with questions about integration monitoring, early access, or partnership opportunities. We respond via Reddit DM.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact — Stakmap",
+    description: "Contact the Stakmap team with questions about integration monitoring, early access, or partnership opportunities.",
+    url: "/contact",
+    type: "website",
+  },
+  twitter: { card: "summary" },
 };
 
 
