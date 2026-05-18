@@ -239,6 +239,25 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 #toast.show{transform:translateY(0);opacity:1}
 #toast span{color:var(--accent)}
 
+/* EMAIL CAPTURE OVERLAY */
+#email-overlay{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(8,12,16,.92);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .3s}
+#email-overlay.open{opacity:1;pointer-events:all}
+#email-overlay .skip-btn{position:absolute;top:20px;right:24px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .15s;padding:4px 8px}
+#email-overlay .skip-btn:hover{color:var(--text)}
+.email-capture-box{background:var(--surface);border:1px solid var(--border-bright);border-radius:14px;padding:40px 44px;max-width:460px;width:90%;text-align:center;box-shadow:0 0 60px rgba(0,229,160,.06)}
+.email-capture-box .ec-tag{font-family:var(--font-mono);font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.email-capture-box h2{font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--text-bright);letter-spacing:-.6px;margin-bottom:8px;line-height:1.2}
+.email-capture-box p{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:24px}
+.ec-input-row{display:flex;gap:8px;margin-bottom:10px}
+.ec-input{flex:1;background:var(--bg);border:1px solid var(--border-bright);border-radius:8px;padding:12px 14px;font-family:var(--font-mono);font-size:13px;color:var(--text-bright);outline:none;transition:border-color .2s}
+.ec-input:focus{border-color:var(--accent)}
+.ec-submit{background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 18px;font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.ec-submit:hover{opacity:.85}
+.ec-benefits{display:flex;flex-direction:column;gap:6px;text-align:left;margin-top:8px}
+.ec-benefit{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
+.ec-benefit::before{content:'[+]';color:var(--accent);flex-shrink:0}
+.ec-success{font-family:var(--font-mono);font-size:13px;color:var(--accent);padding:10px 0}
+
 /* ADD TOOL MODAL */
 #add-tool-modal{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;background:rgba(8,12,16,.8);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
 #add-tool-modal.open{opacity:1;pointer-events:all}
@@ -420,6 +439,28 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 <!-- TOAST -->
 <div id="toast"></div>
 
+<!-- EMAIL CAPTURE OVERLAY -->
+<div id="email-overlay">
+  <button class="skip-btn" onclick="skipEmailCapture()">Skip &rarr;</button>
+  <div class="email-capture-box">
+    <div class="ec-tag">// ONE LAST THING</div>
+    <h2>Get your full report<br>emailed to you.</h2>
+    <p>We'll send you a copy of your stack analysis, plus early access when the real product launches.</p>
+    <div id="ec-form">
+      <div class="ec-input-row">
+        <input class="ec-input" id="ec-email" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')submitEmailCapture()"/>
+        <button class="ec-submit" onclick="submitEmailCapture()">Send report &rarr;</button>
+      </div>
+      <div class="ec-benefits">
+        <div class="ec-benefit">Free early access — before public launch</div>
+        <div class="ec-benefit">Founder member discount, locked in for life</div>
+        <div class="ec-benefit">Product updates as we build</div>
+      </div>
+    </div>
+    <div id="ec-success" style="display:none" class="ec-success">[ OK ] — You're on the list. Check your inbox.</div>
+  </div>
+</div>
+
 <!-- ADD TOOL MODAL -->
 <div id="add-tool-modal">
   <div class="add-modal-box">
@@ -536,7 +577,24 @@ function goToStep3(){
     document.getElementById('sel-note').style.display='inline';
     setTimeout(()=>b.classList.remove('shake'),500);return;
   }
+  document.getElementById('email-overlay').classList.add('open');
+}
+function skipEmailCapture(){
+  document.getElementById('email-overlay').classList.remove('open');
   showStep(3);runLoader();
+}
+async function submitEmailCapture(){
+  const email=document.getElementById('ec-email').value.trim();
+  if(email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    try{
+      await fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    }catch(e){}
+    document.getElementById('ec-form').style.display='none';
+    document.getElementById('ec-success').style.display='block';
+    setTimeout(()=>{document.getElementById('email-overlay').classList.remove('open');showStep(3);runLoader();},1400);
+  } else {
+    skipEmailCapture();
+  }
 }
 
 function runLoader(){
