@@ -72,7 +72,7 @@ function Hero() {
                 flexShrink: 0,
               }}
             />
-            Is something in your stack broken right now?
+            ⚡ Beta now live — try the interactive demo
           </div>
 
           <h1
@@ -106,13 +106,43 @@ function Hero() {
               fontWeight: 400,
             }}
           >
+            The world&apos;s most precise integration monitoring tool for SaaS teams.
             Right now, something in your stack is broken and you don&apos;t know it.
-            Stakmap is an integration monitoring tool that shows you exactly what,
-            why, and how to fix it — before your customers find out first.
+            Stakmap shows you exactly what, why, and how to fix it — before your
+            customers find out first.
           </p>
 
           <div className="animate-fade-up-3" id="hero-form">
             <WaitlistForm />
+            <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dim)" }}>or</span>
+              <a
+                href="/demo"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                  color: "var(--accent)",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  border: "1px solid rgba(0,229,160,0.25)",
+                  borderRadius: 6,
+                  padding: "6px 14px",
+                  background: "rgba(0,229,160,0.06)",
+                  transition: "background 0.15s",
+                }}
+              >
+                <span style={{
+                  width: 6, height: 6, borderRadius: "50%",
+                  background: "var(--accent)",
+                  boxShadow: "0 0 5px var(--accent)",
+                  display: "inline-block",
+                  flexShrink: 0,
+                }} />
+                Try the interactive beta demo →
+              </a>
+            </div>
           </div>
         </div>
 
@@ -379,7 +409,7 @@ function PainSection() {
           maxWidth: 600,
         }}
       >
-        Every founder we spoke to had the same story.
+        Every founder we spoke to had the same story about integration failures.
       </h2>
 
       <div className="split-3">
@@ -608,9 +638,9 @@ function SocialProof() {
           }}
         >
           {[
-            { num: "48%", label: "of enterprise apps are completely unmanaged" },
-            { num: "13×", label: "average SaaS tools per employee, up 85% in two years" },
-            { num: "86%", label: "of IT leaders say tool sprawl is creating security risk" },
+            { num: "48%", label: "of enterprise apps are completely unmanaged (Zylo, 2024)" },
+            { num: "13×", label: "average SaaS tools per employee, up 85% in two years (BetterCloud)" },
+            { num: "86%", label: "of IT leaders say tool sprawl is creating security risk (Productiv)" },
           ].map((s) => (
             <div key={s.num} style={{ background: "var(--bg)", padding: "36px 24px", textAlign: "center" }}>
               <div
@@ -673,7 +703,7 @@ function HowItWorks() {
           maxWidth: 520,
         }}
       >
-        From chaos to clarity in three steps.
+        From chaos to clarity in three steps — faster than any tool on the market.
       </h2>
 
       <div className="split-3">
@@ -975,6 +1005,46 @@ function FeaturesSection() {
           {featuresList.map((f) => (
             <FeatureCard key={f.title} title={f.title} desc={f.desc} tag={f.tag} />
           ))}
+        </div>
+
+        <div style={{
+          marginTop: 56,
+          background: "var(--bg)",
+          border: "1px solid rgba(0,229,160,0.2)",
+          borderRadius: 14,
+          padding: "28px 32px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 24,
+          flexWrap: "wrap",
+        }}>
+          <div>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--accent)", letterSpacing: 1.5, marginBottom: 6 }}>// BETA NOW LIVE</div>
+            <div style={{ fontFamily: "var(--font-inter)", fontSize: 18, fontWeight: 800, color: "var(--text-bright)", letterSpacing: "-0.5px" }}>
+              See every feature in action — right now, for free.
+            </div>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--text-dim)", marginTop: 6, lineHeight: 1.6 }}>
+              The interactive beta demo shows exactly what Stakmap does on a real-looking stack. No signup required.
+            </div>
+          </div>
+          <a
+            href="/demo"
+            style={{
+              background: "var(--accent)",
+              color: "#000",
+              borderRadius: 8,
+              padding: "12px 24px",
+              fontFamily: "var(--font-inter)",
+              fontWeight: 700,
+              fontSize: 13,
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            Try the beta demo →
+          </a>
         </div>
       </div>
     </section>

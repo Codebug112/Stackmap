@@ -124,6 +124,36 @@ export function Nav() {
         >
           Contact
         </Link>
+        <Link
+          href="/demo"
+          style={{
+            letterSpacing: "0.3px",
+            color: "var(--accent)",
+            textDecoration: "none",
+            transition: "all 0.15s",
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            background: "rgba(0,229,160,0.08)",
+            border: "1px solid rgba(0,229,160,0.2)",
+            borderRadius: 6,
+            padding: "4px 10px",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,229,160,0.15)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,229,160,0.08)";
+          }}
+        >
+          <span style={{
+            width: 6, height: 6, borderRadius: "50%",
+            background: "var(--accent)",
+            boxShadow: "0 0 6px var(--accent)",
+            display: "inline-block",
+          }} />
+          Try Beta
+        </Link>
       </div>
 
       <button
