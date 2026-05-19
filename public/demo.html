@@ -498,7 +498,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
       <div class="map-area">
         <div class="map-topbar">
           <button id="mobile-menu-btn" onclick="toggleMobileSidebar()" title="Menu">&#9776;</button>
-          <button onclick="showStep(2)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);font-family:var(--font-mono);font-size:11px;border-radius:5px;padding:5px 11px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-bright)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">&#8592; Back</button>
           <input class="map-search" id="map-search" placeholder="Search your stack..." oninput="searchStack(this.value)"/>
           <div class="map-meta">
             <div class="updated-tag"><span class="pulse-dot"></span>Last updated: just now</div>
@@ -850,11 +849,20 @@ function drawToolNode(layer,pos,tool,init,status,idx){
 }
 
 function showPopup(type,data){
-  const card=document.getElementById('popup-card'),body=document.getElementById('popup-body'),ht=document.getElementById('popup-header-title');
-  if(type==='you'){ht.textContent='// stack overview';body.innerHTML=buildOverviewCard();}
-  else if(type==='node'){const ti=selectedTools[data.idx];const t=TOOLS[ti];const s=getToolStatuses()[data.idx]||'healthy';ht.textContent='// '+t.name;body.innerHTML=buildNodeCard(t,s,data.idx);document.querySelectorAll('.tool-row').forEach(r=>r.classList.remove('active'));const row=document.getElementById('tool-row-'+data.idx);if(row)row.classList.add('active');}
-  else if(type==='conn'){const c=data.conn;const f=TOOLS[selectedTools[c.from]],t2=TOOLS[selectedTools[c.to]];ht.textContent='// '+f.name+' → '+t2.name;body.innerHTML=buildConnCard(c,f,t2);}
+  const card=document.getElementById('popup-card'),body=document.getElementById('popup-body');
+  if(type==='you'){body.innerHTML=buildOverviewCard();}
+  else if(type==='node'){
+    const ti=selectedTools[data.idx];const t=TOOLS[ti];const s=getToolStatuses()[data.idx]||'healthy';
+    body.innerHTML=buildNodeCard(t,s,data.idx);
+    document.querySelectorAll('.tool-row').forEach(r=>r.classList.remove('active'));
+    const row=document.getElementById('tool-row-'+data.idx);if(row)row.classList.add('active');
+  }
+  else if(type==='conn'){
+    const c=data.conn;const f=TOOLS[selectedTools[c.from]],t2=TOOLS[selectedTools[c.to]];
+    body.innerHTML=buildConnCard(c,f,t2);
+  }
   card.classList.add('open');
+  body.scrollTop=0;
 }
 
 function closePopup(){document.getElementById('popup-card').classList.remove('open','fullscreen');document.querySelectorAll('.tool-row').forEach(r=>r.classList.remove('active'));popupExpanded=false;document.getElementById('expand-btn').innerHTML='&#10150;';}
@@ -908,24 +916,43 @@ function buildConnCard(conn,from,to){
 }
 
 function buildBrokenConnCard(from,to){
-  return`<div class="popup-status-badge" style="background:var(--danger-dim);border:1px solid rgba(255,77,106,.3);color:var(--danger)">// BROKEN — ACTION NEEDED</div>
-<div class="popup-title">${from.name} → ${to.name}</div><div class="popup-sub">Last active: 3 days ago &nbsp;·&nbsp; First detected: Thu 15 May 06:41</div>
-<div class="popup-section"><div class="popup-section-title">// AI CONFIDENCE</div>
-<div class="conf-bar-track"><div class="conf-bar-fill" style="width:94%;background:var(--danger)"></div></div>
-<div class="conf-note">94% confident &nbsp;·&nbsp; 3 signals<br>Webhook silence &nbsp;·&nbsp; Error rate spike &nbsp;·&nbsp; Zero events in 72hrs</div></div>
-<div class="popup-section"><div class="impact-card"><div class="ic-head">! BUSINESS IMPACT</div>
-<p>Every new paying customer since Tuesday has <strong>not</strong> been added to your CRM. Sales team has zero visibility of recent signups. Estimated affected records: <strong style="color:var(--warn)">14</strong>. At your current conversion rate that represents approximately <strong style="color:var(--warn)">$2,800</strong> in pipeline with no follow-up.</p></div></div>
+  return`<div class="popup-status-badge" style="background:var(--danger-dim);border:1px solid rgba(255,77,106,.3);color:var(--danger)">● BROKEN — ACTION NEEDED</div>
+<div class="popup-title">${from.name} → ${to.name}</div>
+<div class="popup-sub">Integration type: Webhook &nbsp;·&nbsp; Silent since: <strong style="color:var(--danger)">Thu 15 May, 14:31</strong></div>
+<div class="divider"></div>
+<div class="popup-section">
+  <div class="popup-section-title">// DETECTION TIMELINE</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+    <div class="stat-box"><div class="stat-val" style="color:var(--danger);font-size:16px">71h</div><div class="stat-lbl">Silent duration</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--danger);font-size:16px">100%</div><div class="stat-lbl">Error rate</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--warn);font-size:16px">0</div><div class="stat-lbl">Events delivered</div></div>
+  </div>
+  <div class="popup-section-title">// AI CONFIDENCE</div>
+  <div class="conf-bar-track"><div class="conf-bar-fill" style="width:94%;background:var(--danger)"></div></div>
+  <div class="conf-note" style="display:flex;justify-content:space-between"><span>3 independent signals detected</span><strong style="color:var(--danger)">94% confidence</strong></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+    <span style="font-family:var(--font-mono);font-size:9px;color:var(--danger);background:var(--danger-dim);border:1px solid rgba(255,77,106,.2);border-radius:3px;padding:2px 7px">● Webhook silence 72h</span>
+    <span style="font-family:var(--font-mono);font-size:9px;color:var(--danger);background:var(--danger-dim);border:1px solid rgba(255,77,106,.2);border-radius:3px;padding:2px 7px">● Error rate: 100%</span>
+    <span style="font-family:var(--font-mono);font-size:9px;color:var(--danger);background:var(--danger-dim);border:1px solid rgba(255,77,106,.2);border-radius:3px;padding:2px 7px">● Zero events delivered</span>
+  </div>
+</div>
+<div class="popup-section"><div class="impact-card"><div class="ic-head">⚠ BUSINESS IMPACT</div>
+<p>Every contact added to ${from.name} since Tuesday has <strong>not</strong> received any marketing emails. Estimated affected contacts: <strong style="color:var(--warn)">~340</strong>.</p>
+<p style="margin-top:8px;font-size:12px">If this is your onboarding sequence: these users received no welcome email. Average onboarding email open rate is 45–65%. These contacts are now cold.</p></div></div>
 <div class="popup-section"><div class="popup-section-title">// MOST LIKELY CAUSE</div>
-<div class="cause-row"><div class="cause-label">${to.name} API key expired</div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:71%;background:var(--danger)"></div></div><div class="cause-pct">71%</div></div>
-<div class="cause-row"><div class="cause-label">Zap was paused manually</div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:22%;background:var(--warn)"></div></div><div class="cause-pct">22%</div></div>
-<div class="cause-row"><div class="cause-label">${from.name} webhook URL changed</div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:7%;background:var(--border-bright)"></div></div><div class="cause-pct">7%</div></div></div>
-<div class="popup-section"><div class="popup-section-title">// HOW TO FIX</div>
-<div class="fix-step"><div class="fix-step-num">1</div><div class="fix-step-text">Open ${to.name} → My Zaps → find the '${from.name}: New Customer' zap → check the status toggle. If 'Off', re-enable and run a test trigger.</div></div>
-<div class="fix-step"><div class="fix-step-num">2</div><div class="fix-step-text">If the zap is active: ${to.name} → Settings → Connected Accounts → find ${from.name} → click Reconnect. Your API key may have been rotated or expired.</div></div>
-<div class="fix-step"><div class="fix-step-num">3</div><div class="fix-step-text">${from.name} Dashboard → Developers → Webhooks → find your ${to.name} endpoint → check last delivery attempts. 401 errors = URL has changed. Copy the new URL from ${to.name} and update it.</div></div>
-<div class="fix-step"><div class="fix-step-num">4</div><div class="fix-step-text">Check ${from.name} → Developers → API Keys. Restricted keys expire silently — look for any key last used 3+ days ago with a recent created_at date.</div></div></div>
+<div class="cause-row"><div class="cause-label"><strong style="color:var(--text-bright)">${to.name} API key expired or revoked</strong></div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:71%;background:var(--danger)"></div></div><div class="cause-pct" style="color:var(--danger)">71%</div></div>
+<div style="font-family:var(--font-body);font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:12px;padding-left:2px">API keys in ${to.name} can be set to expire automatically. A key rotation in the last 72 hours would explain the exact timing. This is the most common cause of this failure pattern.</div>
+<div class="cause-row"><div class="cause-label"><strong style="color:var(--text-bright)">${from.name} workflow paused or deleted</strong></div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:22%;background:var(--warn)"></div></div><div class="cause-pct" style="color:var(--warn)">22%</div></div>
+<div style="font-family:var(--font-body);font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:12px;padding-left:2px">If someone manually paused or deleted the ${from.name} workflow that triggers this sync, no events would be sent. Check ${from.name} → Automation → Workflows.</div>
+<div class="cause-row"><div class="cause-label">${from.name} webhook URL changed</div><div class="cause-bar-track"><div class="cause-bar-fill" style="width:7%;background:var(--border-bright)"></div></div><div class="cause-pct">7%</div></div>
+</div>
+<div class="popup-section"><div class="popup-section-title">// STEP-BY-STEP FIX &nbsp;<span style="font-size:10px;color:var(--text-dim);font-weight:400">est. 4 minutes</span></div>
+<div class="fix-step"><div class="fix-step-num">1</div><div class="fix-step-text"><strong style="color:var(--text-bright)">Check your ${to.name} API key</strong><br>Go to ${to.name} → Settings → API Keys. Find the key used by your ${from.name} integration. Check the 'Last Used' column — if it shows 'Never' or a date before Thursday, this key has been replaced or expired.</div></div>
+<div class="fix-step"><div class="fix-step-num">2</div><div class="fix-step-text"><strong style="color:var(--text-bright)">Update the key in ${from.name}</strong><br>${from.name} → Settings → Integrations → Email → ${to.name}. Click 'Reconnect' or 'Update API Key'. Paste the new key from Step 1 and save.</div></div>
+<div class="fix-step"><div class="fix-step-num">3</div><div class="fix-step-text"><strong style="color:var(--text-bright)">Send a test email to verify</strong><br>In ${from.name} → Marketing → Email, create a test email and send to yourself. If it arrives, the integration is restored. If not, proceed to Step 4.</div></div>
+<div class="fix-step"><div class="fix-step-num">4</div><div class="fix-step-text"><strong style="color:var(--text-bright)">Check the ${from.name} workflow</strong><br>${from.name} → Automation → Workflows → find the workflow that sends to ${to.name} → check its status (should show 'On'). If paused, re-enable and enrol a test contact to verify.</div></div></div>
 <div class="disclaimer-card"><h4>// If none of the above resolves it</h4>
-<ul><li>Has anyone changed ${from.name} settings in the last 72 hours?</li><li>Did a deploy modify any environment variables?</li><li>Is your ${to.name} account on a plan that supports this trigger?</li><li>Check ${to.name} status page for ongoing incidents.</li></ul></div>
+<ul><li>Has anyone changed ${from.name} settings in the last 72 hours?</li><li>Did you recently hit ${to.name}'s free tier email limit?</li><li>Check the ${to.name} status page for ongoing incidents.</li></ul></div>
 <div class="reddit-quote"><p>"Our ${from.name} integration broke silently. We found out a week later when a customer asked why they hadn't been onboarded."</p><cite>— Founder, r/SaaS</cite></div>
 <div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
 }
@@ -954,22 +981,27 @@ function buildWarnConnCard(from,to){
 }
 
 function buildHealthyConnCard(from,to){
-  const bars=[60,72,68,85,78,92,88];
-  return`<div class="popup-status-badge" style="background:var(--accent-dim);border:1px solid var(--accent-mid);color:var(--accent)">// HEALTHY</div>
-<div class="popup-title">${from.name} → ${to.name}</div><div class="popup-sub">Operating within all normal parameters</div>
-<div class="popup-section"><div class="popup-section-title">// AI CONFIDENCE</div>
-<div class="conf-bar-track"><div class="conf-bar-fill" style="width:99%;background:var(--accent)"></div></div>
-<div class="conf-note">99% confident &nbsp;·&nbsp; 6 signals &nbsp;·&nbsp; All checks passing</div></div>
-<div class="stats-row"><div class="stat-box"><div class="stat-val">2m</div><div class="stat-lbl">Last fired</div></div><div class="stat-box"><div class="stat-val">1,247</div><div class="stat-lbl">This week</div></div><div class="stat-box"><div class="stat-val">340ms</div><div class="stat-lbl">Avg latency</div></div></div>
-<div class="popup-section"><div class="popup-section-title">// 7-DAY VOLUME</div>
-<div class="sparkline">${bars.map(h=>`<div class="spark-bar" style="height:${h}%"></div>`).join('')}</div>
-<div class="trend-text">+ 12% vs last week</div></div>
+  const bars=[180,195,210,187,201,143,131];const max=Math.max(...bars);
+  return`<div class="popup-status-badge" style="background:var(--accent-dim);border:1px solid var(--accent-mid);color:var(--accent)">● HEALTHY</div>
+<div class="popup-title">${from.name} → ${to.name}</div>
+<div class="popup-sub">100% uptime · 47-day streak &nbsp;·&nbsp; Integration type: Webhook</div>
+<div class="divider"></div>
+<div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
+  <div class="stat-box"><div class="stat-val" style="font-size:14px">2m</div><div class="stat-lbl">Last fired</div></div>
+  <div class="stat-box"><div class="stat-val" style="font-size:14px">1,247</div><div class="stat-lbl">Events / week</div></div>
+  <div class="stat-box"><div class="stat-val" style="font-size:14px">338ms</div><div class="stat-lbl">Avg latency</div></div>
+  <div class="stat-box"><div class="stat-val" style="font-size:14px">0.0%</div><div class="stat-lbl">Error rate</div></div>
+</div>
+<div class="popup-section"><div class="popup-section-title">// 7-DAY EVENT VOLUME</div>
+<div style="display:flex;align-items:flex-end;gap:4px;height:48px;margin-bottom:4px">${bars.map((h,i)=>`<div style="flex:1;background:var(--accent);border-radius:2px 2px 0 0;opacity:${i===5||i===6?.45:.7};height:${Math.round(h/max*100)}%;min-height:4px"></div>`).join('')}</div>
+<div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9px;color:var(--text-dim)"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+<div class="trend-text" style="margin-top:6px">↑ 12% vs last week</div></div>
 <div class="popup-section"><div class="popup-section-title">// DEPENDENCY RISK</div>
-<div class="dep-warn"><div class="dw-head">! 3 other connections depend on this one</div><p>If this breaks: your CRM sync, Slack alerts, and analytics events would all fail. This is the single most critical connection in your stack — treat it as your primary health indicator.</p></div></div>
-<div class="popup-section"><div class="popup-section-title">// RECOMMENDATIONS</div>
-<div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Set a custom alert at 20% volume drop — this is the first signal before a full failure.</div></div>
-<div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">API key expires in 89 days. Schedule a renewal reminder now to avoid a silent break.</div></div>
-<div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Consider adding a fallback webhook endpoint. If the primary fails, the fallback fires — zero downtime.</div></div></div>`;
+<div class="dep-warn"><div class="dw-head">⚠ 3 other connections depend on this one</div><p>If this breaks: your CRM sync, Slack revenue alerts, and analytics pipeline would all be affected. This is your highest-risk single point of failure.</p></div></div>
+<div class="popup-section"><div class="popup-section-title">// AI RECOMMENDATIONS</div>
+<div class="info-row"><div class="info-row-icon">→</div><div class="info-row-text">API key expires in <strong>89 days</strong>. Schedule a renewal reminder for day 60 — silent expiry is the #1 cause of this connection type failing.</div></div>
+<div class="info-row"><div class="info-row-icon">→</div><div class="info-row-text">Set a volume alert at 20% below weekly average (999 events). Volume drop is the first signal before a full failure.</div></div>
+<div class="info-row"><div class="info-row-icon">→</div><div class="info-row-text">This connection has maintained <strong>100% uptime for 47 days</strong>. Healthy baseline latency is 338ms — if you see spikes above 2s, investigate immediately.</div></div></div>`;
 }
 
 function buildUnmonitoredConnCard(from,to){
@@ -1064,8 +1096,12 @@ function buildIconRail(){
   selectedTools.forEach((ti,i)=>{const t=TOOLS[ti];const s=st[i]||'healthy';const dc={healthy:'var(--accent)',broken:'var(--danger)',warn:'var(--warn)',unmonitored:'var(--text-dim)'}[s];const init=t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();const d=document.createElement('div');d.style.cssText=`width:30px;height:30px;border-radius:6px;background:${t.bg};display:flex;align-items:center;justify-content:center;font-family:JetBrains Mono,monospace;font-size:9px;color:${t.color};cursor:pointer;border:2px solid ${dc}`;d.textContent=init;d.title=t.name;d.onclick=()=>{toggleSidebar();highlightNode(i);};rail.appendChild(d);});
 }
 
-function zoomMap(f){mapScale=Math.max(0.5,Math.min(3,mapScale*f));const s=document.getElementById('map-svg');s.style.transform=`scale(${mapScale})`;s.style.transformOrigin='center center';}
-function resetZoom(){mapScale=1;document.getElementById('map-svg').style.transform='';}
+function zoomMap(f){
+  mapScale=Math.max(0.4,Math.min(4,mapScale*f));
+  const W=960,H=620,w=W/mapScale,h=H/mapScale;
+  document.getElementById('map-svg').setAttribute('viewBox',`${480-w/2} ${310-h/2} ${w} ${h}`);
+}
+function resetZoom(){mapScale=1;document.getElementById('map-svg').setAttribute('viewBox','0 0 960 620');}
 
 function showToast(msg){
   const t=document.getElementById('toast');
