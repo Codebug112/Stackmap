@@ -2,11 +2,51 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
 import { getResend } from "@/lib/resend";
 
-export async function POST(req: NextRequest) {
-  try {
-    const { email } = await req.json();
+// In-memory rate limiter — per serverless instance, per IP.
+// On Vercel each warm instance enforces its own limit; across instances
+// the unique-email DB constraint is the hard backstop against duplicate sends.
+const ipBucket = new Map<string, number[]>();
+const RATE_WINDOW_MS = 60_000;
+const RATE_LIMIT = 5;
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (ipBucket.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (hits.length >= RATE_LIMIT) return true;
+  hits.push(now);
+  ipBucket.set(ip, hits);
+  return false;
+}
+
+const MAX_EMAIL_LEN = 254; // RFC 5321
+
+export async function POST(req: NextRequest) {
+  // Reject non-JSON content types early
+  const ct = req.headers.get("content-type") ?? "";
+  if (!ct.includes("application/json")) {
+    return NextResponse.json({ error: "Bad request" }, { status: 400 });
+  }
+
+  // Rate limit by IP
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
+  try {
+    const body = await req.json();
+    const raw: string = typeof body?.email === "string" ? body.email : "";
+    const email = raw.trim().toLowerCase();
+
+    if (
+      !email ||
+      email.length > MAX_EMAIL_LEN ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
