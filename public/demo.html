@@ -283,14 +283,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
   <div class="modal-box">
     <div class="modal-tag">// INTERACTIVE DEMO</div>
     <div class="modal-title">See Stakmap in action.</div>
-    <div class="modal-sub">This is example data — not your real stack.<br>Built to show exactly what Stakmap does.</div>
+    <div class="modal-sub">This is a <strong style="color:var(--text)">simulated walkthrough</strong> using example data — not your real stack. In the actual product, Stakmap connects directly to your tools via API to monitor live integration health in real time.</div>
     <div class="modal-bar"><div class="modal-bar-fill"></div></div>
   </div>
 </div>
 
 <!-- TOP BANNER -->
 <div id="demo-banner">
-  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— Example data only. Not connected to a real stack.</div>
+  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <a href="/join" style="color:var(--accent);text-decoration:none">Join waitlist</a> for live monitoring.</div>
   <a href="/join" class="banner-btn">Join the real waitlist &rarr;</a>
 </div>
 
@@ -400,12 +400,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
           <input class="map-search" id="map-search" placeholder="Search your stack..." oninput="searchStack(this.value)"/>
           <div class="map-meta">
             <div class="updated-tag"><span class="pulse-dot"></span>Last updated: just now</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--warn);background:rgba(255,140,66,.06);border:1px solid rgba(255,140,66,.2);border-radius:4px;padding:3px 8px;letter-spacing:.3px">Simulated data</div>
             <div class="alerts-badge">2 active alerts</div>
             <button class="export-btn" onclick="showToast('PDF export available in the full product — join the waitlist to get early access.')">Export report</button>
           </div>
         </div>
         <div class="map-svg-wrap">
-          <svg id="map-svg" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet">
+          <svg id="map-svg" viewBox="0 0 960 620" preserveAspectRatio="xMidYMid meet">
             <defs>
               <filter id="glow-green"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
               <filter id="glow-red"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -413,6 +414,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             </defs>
             <g id="connections-layer"></g>
             <g id="nodes-layer"></g>
+            <text x="8" y="610" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(106,128,152,0.45)" letter-spacing="0.5">// SIMULATED DATA — real product monitors live API connections</text>
           </svg>
           <div class="map-controls">
             <button class="map-ctrl-btn" onclick="zoomMap(1.2)">+</button>
@@ -649,10 +651,26 @@ function buildSidebarToolList(){
   });
 }
 
-const CX=450,CY=300,R=205;
+const CX=480,CY=310;
+
+// Organic pre-designed node offsets — varied radii, irregular angles, some clustering
+const SPRAWL_OFFSETS=[
+  {dx:-210,dy:-130},{dx:190,dy:-195},{dx:255,dy:55},{dx:130,dy:200},{dx:-175,dy:185},
+  {dx:-255,dy:15},{dx:55,dy:-165},{dx:-95,dy:-205},{dx:205,dy:-105},{dx:265,dy:165},
+  {dx:-55,dy:230},{dx:-205,dy:125},{dx:95,dy:250},{dx:-150,dy:-55},{dx:125,dy:-245},
+  {dx:-290,dy:-75},{dx:290,dy:-15},{dx:-115,dy:270},{dx:75,dy:290},{dx:-35,dy:-275},
+  {dx:205,dy:250},{dx:-265,dy:185},{dx:310,dy:85},{dx:-315,dy:-155},{dx:165,dy:-285},
+  {dx:-70,dy:310},{dx:270,dy:-205},{dx:-350,dy:55},{dx:155,dy:310},{dx:-205,dy:-285},
+];
+
 function getNodePositions(){
   const n=selectedTools.length,pos=[{x:CX,y:CY}];
-  for(let i=0;i<n;i++){const a=(2*Math.PI/n)*i-Math.PI/2;pos.push({x:CX+R*Math.cos(a),y:CY+R*Math.sin(a)});}
+  for(let i=0;i<n;i++){
+    const o=SPRAWL_OFFSETS[i%SPRAWL_OFFSETS.length];
+    // Scale down slightly for smaller selections so they don't feel empty
+    const scale=n<=6?0.7:n<=10?0.82:n<=16?0.92:1;
+    pos.push({x:Math.max(40,Math.min(920,CX+o.dx*scale)),y:Math.max(36,Math.min(580,CY+o.dy*scale))});
+  }
   return pos;
 }
 
