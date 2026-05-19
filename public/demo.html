@@ -44,8 +44,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 #demo-banner.show{opacity:1;pointer-events:all}
 .banner-text{font-family:var(--font-mono);font-size:11px;color:var(--text-dim)}
 .banner-text strong{color:var(--text)}
-.banner-btn{font-family:var(--font-mono);font-size:13px;font-weight:600;color:#000;background:var(--accent);border:none;border-radius:6px;padding:9px 20px;cursor:pointer;text-decoration:none;transition:opacity .15s;letter-spacing:.2px}
-.banner-btn:hover{opacity:.85}
+.banner-btn{font-family:var(--font-mono);font-size:13px;font-weight:600;color:#000;background:var(--accent);border:none;border-radius:6px;padding:9px 20px;cursor:pointer;text-decoration:none;letter-spacing:.2px;animation:bob 1.8s ease-in-out infinite;display:inline-block}
+.banner-btn:hover{opacity:.85;animation:none}
 
 /* ── STEPS ── */
 #app{position:relative;z-index:1;min-height:100vh}
@@ -253,8 +253,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 .ec-input-row{display:flex;gap:8px;margin-bottom:10px}
 .ec-input{flex:1;background:var(--bg);border:1px solid var(--border-bright);border-radius:8px;padding:12px 14px;font-family:var(--font-mono);font-size:13px;color:var(--text-bright);outline:none;transition:border-color .2s}
 .ec-input:focus{border-color:var(--accent)}
-.ec-submit{background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 18px;font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;transition:opacity .15s}
-.ec-submit:hover{opacity:.85}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ec-submit{background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 18px;font-family:var(--font-display);font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;transition:opacity .15s;animation:bob 1.8s ease-in-out infinite}
+.ec-submit:hover{opacity:.85;animation:none}
 .ec-benefits{display:flex;flex-direction:column;gap:6px;text-align:left;margin-top:8px}
 .ec-benefit{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim)}
 .ec-benefit::before{content:'[+]';color:var(--accent);flex-shrink:0}
@@ -276,6 +277,101 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(0,229,160,.5)}50%{box-shadow:0 0 0 7px rgba(0,229,160,0)}}
 .cta-pulse-btn{background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 24px;font-family:var(--font-display);font-weight:700;font-size:13px;cursor:pointer;animation:pulse-glow 2.2s infinite;text-decoration:none;white-space:nowrap;letter-spacing:-.2px}
 .cta-pulse-btn:hover{opacity:.88}
+
+/* ── MOBILE SIDEBAR OVERLAY ── */
+#mobile-sb-overlay{position:fixed;inset:0;background:rgba(8,12,16,.65);z-index:140;backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s}
+#mobile-sb-overlay.open{opacity:1;pointer-events:all}
+#mobile-menu-btn{display:none;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);font-family:var(--font-mono);font-size:15px;border-radius:5px;width:30px;height:30px;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+#mobile-menu-btn:hover{border-color:var(--border-bright);color:var(--text-bright)}
+
+@media(max-width:900px){
+  /* Banner compact */
+  .banner-text{font-size:10px}
+  .banner-btn{padding:6px 12px;font-size:11px}
+
+  /* Step 2: 4 columns */
+  .tools-grid{grid-template-columns:repeat(4,1fr)}
+
+  /* Map topbar: hide less-critical items */
+  .updated-tag{display:none}
+  .export-btn{display:none}
+
+  /* Popup: wider portion */
+  .popup-card{width:360px}
+}
+
+@media(max-width:768px){
+  /* Step 2: 3 cols */
+  .tools-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  #step2{padding:52px 16px 12px}
+  .step2-footer{width:100%}
+
+  /* App layout */
+  .app-layout{padding-top:44px}
+
+  /* Sidebar: hidden offscreen, full-width drawer when open */
+  .sidebar{
+    position:fixed;top:0;bottom:0;left:0;
+    z-index:150;
+    width:260px!important;min-width:260px!important;
+    transform:translateX(-100%);
+    transition:transform .3s;
+  }
+  .sidebar.mobile-open{transform:translateX(0)}
+  /* Override collapsed state on mobile — never show icon-rail */
+  .sidebar.collapsed{width:260px!important;min-width:260px!important;transform:translateX(-100%)}
+  .sidebar.collapsed .sidebar-content{display:flex!important}
+  .sidebar.collapsed .icon-rail{display:none!important}
+  .sidebar-toggle{display:none}
+
+  /* Show hamburger */
+  #mobile-menu-btn{display:flex}
+
+  /* Map topbar */
+  .map-topbar{padding:7px 10px;gap:6px}
+  .map-search{width:100px}
+  .alerts-badge{display:none}
+
+  /* Popup: full width */
+  .popup-card{width:100%;left:0}
+
+  /* Banner */
+  #demo-banner{height:auto;padding:7px 14px;flex-wrap:wrap;gap:6px}
+  .banner-text{font-size:10px;line-height:1.5}
+}
+
+@media(max-width:480px){
+  /* Step 1 */
+  #step1{padding:60px 16px 24px}
+  #step1 h1{font-size:clamp(24px,7vw,36px);letter-spacing:-1px}
+  .domain-input-row{flex-direction:column;border-radius:10px;overflow:visible}
+  .domain-input{border-radius:8px 8px 0 0;border:1px solid var(--border-bright)}
+  .scan-btn{border-radius:0 0 8px 8px;border-top:1px solid rgba(0,0,0,.2)}
+
+  /* Step 2 */
+  .tools-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .tool-name{font-size:9px}
+  .tool-avatar{width:28px;height:28px;font-size:9px}
+  .step2-footer{gap:10px}
+
+  /* Banner: hide text on smallest screens, keep button */
+  .banner-text{display:none}
+  .banner-btn{animation:none;font-size:12px}
+
+  /* Email overlay */
+  .email-capture-box{padding:28px 18px;width:94%}
+  .ec-input-row{flex-direction:column}
+  .ec-input{border-radius:8px}
+  .ec-submit{border-radius:8px;width:100%}
+
+  /* Popup */
+  .popup-card{width:100%;left:0}
+  .popup-card.fullscreen{inset:0;width:100%}
+
+  /* Map topbar: minimal */
+  .map-search{display:none}
+  .map-meta>*:not(.alerts-badge){display:none}
+}
 </style>
 </head>
 <body>
@@ -293,8 +389,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 <!-- TOP BANNER -->
 <div id="demo-banner">
   <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <a href="/join" style="color:var(--accent);text-decoration:none">Join waitlist</a> for live monitoring.</div>
-  <a href="/join" class="banner-btn">Join the real waitlist &rarr;</a>
+  <button class="banner-btn" onclick="openWaitlistOverlay()">Join the real waitlist &rarr;</button>
 </div>
+
+<!-- MOBILE SIDEBAR OVERLAY -->
+<div id="mobile-sb-overlay" onclick="closeMobileSidebar()"></div>
 
 <div id="app">
 
@@ -389,7 +488,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="showToast('Settings available in the full product — join the waitlist for early access.')">
               <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">[ Settings ]</span>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="window.location.href='/join'">
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'" onclick="openWaitlistOverlay()">
               <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent)">[ Join Waitlist ]</span>
             </div>
           </div>
@@ -398,6 +497,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 
       <div class="map-area">
         <div class="map-topbar">
+          <button id="mobile-menu-btn" onclick="toggleMobileSidebar()" title="Menu">&#9776;</button>
           <button onclick="showStep(2)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);font-family:var(--font-mono);font-size:11px;border-radius:5px;padding:5px 11px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;flex-shrink:0" onmouseover="this.style.borderColor='var(--border-bright)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">&#8592; Back</button>
           <input class="map-search" id="map-search" placeholder="Search your stack..." oninput="searchStack(this.value)"/>
           <div class="map-meta">
@@ -426,7 +526,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
         </div>
         <div class="popup-card" id="popup-card">
           <div class="popup-header">
-            <div id="popup-header-title" style="font-family:var(--font-mono);font-size:10px;color:var(--text-dim)">Connection details</div>
+            <button onclick="closePopup()" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:4px;padding:0;transition:color .15s" onmouseover="this.style.color='var(--text-bright)'" onmouseout="this.style.color='var(--text-dim)'">&#8592; Map</button>
             <div class="popup-header-btns">
               <button class="popup-icon-btn" id="expand-btn" onclick="expandPopup()" title="Expand">&#10150;</button>
               <button class="popup-icon-btn" onclick="closePopup()" title="Close">&#215;</button>
@@ -447,13 +547,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 <div id="email-overlay">
   <button class="skip-btn" onclick="skipEmailCapture()">Skip &rarr;</button>
   <div class="email-capture-box">
-    <div class="ec-tag">// ONE LAST THING</div>
-    <h2>Get your full report<br>emailed to you.</h2>
-    <p>We'll send you a copy of your stack analysis, plus early access when the real product launches.</p>
+    <div class="ec-tag">// JOIN THE WAITLIST</div>
+    <h2>Get early access<br>to Stakmap.</h2>
+    <p>Be first when we launch. No spam — one email when access opens.</p>
     <div id="ec-form">
       <div class="ec-input-row">
         <input class="ec-input" id="ec-email" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')submitEmailCapture()"/>
-        <button class="ec-submit" onclick="submitEmailCapture()">Send report &rarr;</button>
+        <button class="ec-submit" onclick="submitEmailCapture()">Join waitlist &rarr;</button>
       </div>
       <div class="ec-benefits">
         <div class="ec-benefit">Free early access — before public launch</div>
@@ -583,6 +683,12 @@ function goToStep3(){
   }
   document.getElementById('email-overlay').classList.add('open');
 }
+function openWaitlistOverlay(){
+  document.getElementById('ec-form').style.display='';
+  document.getElementById('ec-success').style.display='none';
+  document.getElementById('ec-email').value='';
+  document.getElementById('email-overlay').classList.add('open');
+}
 function skipEmailCapture(){
   document.getElementById('email-overlay').classList.remove('open');
   showStep(3);runLoader();
@@ -649,7 +755,7 @@ function buildSidebarToolList(){
     const row=document.createElement('div');
     row.className='tool-row';row.id='tool-row-'+i;
     row.innerHTML=`<div class="tool-row-avatar" style="background:${t.bg};color:${t.color}">${init}</div><div class="tool-row-name">${t.name}</div><div class="status-dot" style="background:${dc}"></div>`;
-    row.onclick=()=>highlightNode(i);list.appendChild(row);
+    row.onclick=()=>{closeMobileSidebar();highlightNode(i);};list.appendChild(row);
   });
 }
 
@@ -785,7 +891,7 @@ function buildSimilarIssues(){
 }
 
 function buildOverviewCard(){
-  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildNodeCard(tool,status,idx){
@@ -821,7 +927,7 @@ function buildBrokenConnCard(from,to){
 <div class="disclaimer-card"><h4>// If none of the above resolves it</h4>
 <ul><li>Has anyone changed ${from.name} settings in the last 72 hours?</li><li>Did a deploy modify any environment variables?</li><li>Is your ${to.name} account on a plan that supports this trigger?</li><li>Check ${to.name} status page for ongoing incidents.</li></ul></div>
 <div class="reddit-quote"><p>"Our ${from.name} integration broke silently. We found out a week later when a customer asked why they hadn't been onboarded."</p><cite>— Founder, r/SaaS</cite></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildWarnConnCard(from,to){
@@ -844,7 +950,7 @@ function buildWarnConnCard(from,to){
 <div class="fix-step"><div class="fix-step-num">2</div><div class="fix-step-text">In ${to.name}, check your API rate limit tier. A growing event queue usually means you're hitting the rate cap. Upgrading tier typically resolves this within 24 hours.</div></div>
 <div class="fix-step"><div class="fix-step-num">3</div><div class="fix-step-text">If neither applies, the queue backlog itself may be the cause. Manually trigger a full sync resync to clear the backlog, then monitor over the next 6 hours.</div></div>
 <p style="font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-top:10px">Expected outcome: sync time reduced to under 15 minutes after fix</p></div>
-<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildHealthyConnCard(from,to){
@@ -876,7 +982,7 @@ function buildUnmonitoredConnCard(from,to){
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Unmonitored connections are your biggest blind spot — if this breaks, you won't know until a customer tells you.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">71% of integration failures are first reported by end users, not internal teams. (Source: BetterCloud, 2024)</div></div></div>
 <div class="risk-note"><p><strong>Unmonitored = unprotected.</strong> Every day this goes without visibility is another day a silent failure can compound.</p></div>
-<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildBrokenNodeCard(tool){
@@ -891,7 +997,7 @@ function buildBrokenNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// PREVENTION — IN THE FULL PRODUCT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Stakmap would have alerted you within 15 minutes of the first failure — 3 days before you'd have found this manually.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">API key expiry warnings 30 days in advance prevent this class of silent failure entirely.</div></div></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildWarnNodeCard(tool){
@@ -905,7 +1011,7 @@ function buildWarnNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// BUSINESS IMPACT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Downstream data is 4+ hours stale — any automation or reporting that reads from the connected tool is running on old data.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">8–12% trial-to-paid conversion improvement is the benchmark when this type of sync delay is resolved (BetterCloud, 2024).</div></div></div>
-<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildHealthyNodeCard(tool){
@@ -915,7 +1021,7 @@ function buildHealthyNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// RECOMMENDATIONS</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Schedule an API key renewal reminder for day 60 (29 days from now) to avoid a silent expiry break.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Consider documenting this integration's dependencies — if the owner leaves, this context disappears with them.</div></div></div>
-<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a href="/join" class="wl-small-btn">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a class="wl-small-btn" onclick="openWaitlistOverlay();return false;" href="#">Join waitlist &rarr;</a></div>`;
 }
 
 function buildUnmonitoredCard(tool){
@@ -933,6 +1039,17 @@ function searchStack(val){
   selectedTools.forEach((ti,i)=>{const t=TOOLS[ti];const g=document.getElementById('node-group-'+i);if(g)g.style.opacity=t.name.toLowerCase().includes(val.toLowerCase())?'1':'0.15';});
 }
 
+function toggleMobileSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('mobile-sb-overlay');
+  const isOpen=sb.classList.contains('mobile-open');
+  sb.classList.toggle('mobile-open',!isOpen);
+  ov.classList.toggle('open',!isOpen);
+}
+function closeMobileSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('mobile-sb-overlay').classList.remove('open');
+}
 function toggleSidebar(){
   sidebarCollapsed=!sidebarCollapsed;
   const sb=document.getElementById('sidebar'),btn=document.getElementById('sidebar-toggle');

@@ -4,6 +4,7 @@ const nextConfig = {
     return [
       { source: "/demo", destination: "/demo.html" },
       { source: "/blog/how-to-monitor-saas-integrations", destination: "/blog-post-1.html" },
+      { source: "/blog/webhook-not-firing", destination: "/blog-post-2.html" },
     ];
   },
 };

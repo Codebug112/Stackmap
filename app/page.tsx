@@ -35,6 +35,7 @@ export default function Home() {
 function Hero() {
   return (
     <section
+      className="hero-section"
       style={{
         position: "relative",
         zIndex: 1,
@@ -600,17 +601,7 @@ function SocialProof() {
           ))}
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 1,
-            background: "var(--border)",
-            border: "1px solid var(--border)",
-            borderRadius: 14,
-            overflow: "hidden",
-          }}
-        >
+        <div className="stats-grid-3">
           {[
             { num: "48%", label: "of enterprise apps are completely unmanaged (Zylo, 2024)" },
             { num: "13×", label: "average SaaS tools per employee, up 85% in two years (BetterCloud)" },

@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Blog index + posts — add every new post here
     { url: `${BASE}/blog`,                                      lastModified: NOW, changeFrequency: "weekly",  priority: 0.8 },
     { url: `${BASE}/blog/how-to-monitor-saas-integrations`,     lastModified: NOW, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/blog/webhook-not-firing`,                   lastModified: NOW, changeFrequency: "monthly", priority: 0.9 },
 
     // Guides / tools
     { url: `${BASE}/integration-audit`,                         lastModified: NOW, changeFrequency: "monthly", priority: 0.8 },

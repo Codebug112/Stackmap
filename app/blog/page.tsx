@@ -20,6 +20,14 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    tag: "DEBUG GUIDE",
+    date: "May 2026",
+    title: "Webhook Not Firing? Here's How to Fix It in 10 Minutes",
+    desc: "Your webhook stopped working and you don't know why. This is the exact debugging process — for Stripe, Zapier, HubSpot, and custom webhooks — that finds the problem in under 10 minutes.",
+    href: "/blog/webhook-not-firing",
+    readTime: "7 min read",
+  },
+  {
     tag: "GUIDE",
     date: "May 2026",
     title: "How to Monitor Your SaaS Integrations (Before Something Breaks)",
@@ -38,11 +46,11 @@ const posts = [
 ];
 
 const COMING = [
-  "Why webhooks fail silently — and how to catch them",
   "The hidden cost of zombie SaaS tools",
   "OAuth token hygiene: the ex-employee access problem",
   "How to audit your stack before a SOC2 assessment",
   "Build vs buy: when to replace a Zapier flow with custom code",
+  "API key rotation: how to do it without breaking your integrations",
 ];
 
 export default function BlogPage() {
@@ -67,6 +75,16 @@ export default function BlogPage() {
               }
             },
             "blogPost": [
+              {
+                "@type": "BlogPosting",
+                "headline": "Webhook Not Firing? Here's How to Fix It in 10 Minutes",
+                "description": "Your webhook stopped working and you don't know why. This is the exact debugging process — for Stripe, Zapier, HubSpot, and custom webhooks — that finds the problem in under 10 minutes.",
+                "url": "https://stakmap.com/blog/webhook-not-firing",
+                "datePublished": "2026-05-19",
+                "author": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
+                "publisher": {"@type": "Organization","name": "Stakmap","url": "https://stakmap.com"},
+                "timeRequired": "PT7M"
+              },
               {
                 "@type": "BlogPosting",
                 "headline": "How to Monitor Your SaaS Integrations (Before Something Breaks)",

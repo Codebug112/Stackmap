@@ -13,7 +13,7 @@ export default function WaitlistForm() {
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 10 }}>
+      <div className="wf-row" style={{ display: "flex", gap: 10 }}>
         <input
           ref={inputRef}
           type="text"

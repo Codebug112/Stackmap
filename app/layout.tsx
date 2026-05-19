@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { WaitlistModalProvider } from "@/components/WaitlistModalProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -97,7 +98,7 @@ export default function RootLayout({
             })
           }}
         />
-        {children}
+        <WaitlistModalProvider>{children}</WaitlistModalProvider>
       </body>
     </html>
   );
