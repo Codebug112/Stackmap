@@ -16,7 +16,7 @@ export function Nav() {
 
   function openWaitlistModal() {
     setMenuOpen(false);
-    window.dispatchEvent(new Event("open-waitlist"));
+    window.location.href = "/join";
   }
 
   function handleAnchor(id: string) {
