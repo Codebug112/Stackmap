@@ -135,7 +135,7 @@ export function WaitlistModal({ open, onClose }: { open: boolean; onClose: () =>
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = "0.85"; (e.currentTarget as HTMLButtonElement).style.animation = "none"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = "1"; (e.currentTarget as HTMLButtonElement).style.animation = "wl-bob 1.8s ease-in-out infinite"; }}
               >
-                {status === "loading" ? "..." : "Join waitlist →"}
+                {status === "loading" ? "..." : "Get 70% off →"}
               </button>
             </div>
 

@@ -388,8 +388,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 
 <!-- TOP BANNER -->
 <div id="demo-banner">
-  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <a href="/join" style="color:var(--accent);text-decoration:none">Join waitlist</a> for live monitoring.</div>
-  <a class="banner-btn" href="/join">Join the real waitlist &rarr;</a>
+  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <a href="/join" style="color:var(--accent);text-decoration:none">Get 70% off</a> when we launch.</div>
+  <a class="banner-btn" href="/join">Get 70% off &rarr;</a>
 </div>
 
 <!-- MOBILE SIDEBAR OVERLAY -->
@@ -552,7 +552,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
     <div id="ec-form">
       <div class="ec-input-row">
         <input class="ec-input" id="ec-email" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')submitEmailCapture()"/>
-        <button class="ec-submit" onclick="submitEmailCapture()">Join waitlist &rarr;</button>
+        <button class="ec-submit" onclick="submitEmailCapture()">Get 70% off &rarr;</button>
       </div>
       <div class="ec-benefits">
         <div class="ec-benefit">Free early access — before public launch</div>
@@ -899,7 +899,7 @@ function buildSimilarIssues(){
 }
 
 function buildOverviewCard(){
-  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+  return`<div class="popup-status-badge" style="background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);color:var(--accent)">// YOUR STACK</div><div class="popup-title">${domain}</div><div class="popup-sub">Stack health: 67/100 &nbsp;·&nbsp; Last scanned: just now</div><div class="stats-row"><div class="stat-box"><div class="stat-val" style="color:var(--accent)">${selectedTools.length}</div><div class="stat-lbl">Tools mapped</div></div><div class="stat-box"><div class="stat-val" style="color:var(--danger)">2</div><div class="stat-lbl">Broken</div></div><div class="stat-box"><div class="stat-val" style="color:var(--warn)">1</div><div class="stat-lbl">Warning</div></div></div><div class="waitlist-prompt"><p>Get this for your <strong>real stack</strong> — automatically.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildNodeCard(tool,status,idx){
@@ -954,7 +954,7 @@ function buildBrokenConnCard(from,to){
 <div class="disclaimer-card"><h4>// If none of the above resolves it</h4>
 <ul><li>Has anyone changed ${from.name} settings in the last 72 hours?</li><li>Did you recently hit ${to.name}'s free tier email limit?</li><li>Check the ${to.name} status page for ongoing incidents.</li></ul></div>
 <div class="reddit-quote"><p>"Our ${from.name} integration broke silently. We found out a week later when a customer asked why they hadn't been onboarded."</p><cite>— Founder, r/SaaS</cite></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this happens in your real stack.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildWarnConnCard(from,to){
@@ -977,7 +977,7 @@ function buildWarnConnCard(from,to){
 <div class="fix-step"><div class="fix-step-num">2</div><div class="fix-step-text">In ${to.name}, check your API rate limit tier. A growing event queue usually means you're hitting the rate cap. Upgrading tier typically resolves this within 24 hours.</div></div>
 <div class="fix-step"><div class="fix-step-num">3</div><div class="fix-step-text">If neither applies, the queue backlog itself may be the cause. Manually trigger a full sync resync to clear the backlog, then monitor over the next 6 hours.</div></div>
 <p style="font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-top:10px">Expected outcome: sync time reduced to under 15 minutes after fix</p></div>
-<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor sync performance in <strong>real-time</strong> with the full product.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildHealthyConnCard(from,to){
@@ -1014,7 +1014,7 @@ function buildUnmonitoredConnCard(from,to){
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Unmonitored connections are your biggest blind spot — if this breaks, you won't know until a customer tells you.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">71% of integration failures are first reported by end users, not internal teams. (Source: BetterCloud, 2024)</div></div></div>
 <div class="risk-note"><p><strong>Unmonitored = unprotected.</strong> Every day this goes without visibility is another day a silent failure can compound.</p></div>
-<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>The real product monitors <strong>all</strong> connections automatically.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildBrokenNodeCard(tool){
@@ -1029,7 +1029,7 @@ function buildBrokenNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// PREVENTION — IN THE FULL PRODUCT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Stakmap would have alerted you within 15 minutes of the first failure — 3 days before you'd have found this manually.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">API key expiry warnings 30 days in advance prevent this class of silent failure entirely.</div></div></div>
-<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Get <strong>real-time alerts</strong> the moment this breaks in your real stack.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildWarnNodeCard(tool){
@@ -1043,7 +1043,7 @@ function buildWarnNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// BUSINESS IMPACT</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Downstream data is 4+ hours stale — any automation or reporting that reads from the connected tool is running on old data.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">8–12% trial-to-paid conversion improvement is the benchmark when this type of sync delay is resolved (BetterCloud, 2024).</div></div></div>
-<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Monitor ${tool.name} performance in real-time with the <strong>full product</strong>.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildHealthyNodeCard(tool){
@@ -1053,7 +1053,7 @@ function buildHealthyNodeCard(tool){
 <div class="popup-section"><div class="popup-section-title">// RECOMMENDATIONS</div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Schedule an API key renewal reminder for day 60 (29 days from now) to avoid a silent expiry break.</div></div>
 <div class="info-row"><div class="info-row-icon">&rarr;</div><div class="info-row-text">Consider documenting this integration's dependencies — if the owner leaves, this context disappears with them.</div></div></div>
-<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a class="wl-small-btn" href="/join">Join waitlist &rarr;</a></div>`;
+<div class="waitlist-prompt"><p>Track ${tool.name} health <strong>automatically</strong> in the real product.</p><a class="wl-small-btn" href="/join">Get 70% off &rarr;</a></div>`;
 }
 
 function buildUnmonitoredCard(tool){

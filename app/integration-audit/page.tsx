@@ -557,7 +557,7 @@ export default function IntegrationAuditPage() {
                 padding: "13px 28px", borderRadius: 10, textDecoration: "none",
               }}
             >
-              Join the waitlist →
+              Get 70% off →
             </Link>
           </div>
 

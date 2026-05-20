@@ -146,7 +146,7 @@ export default function ContactPage() {
                     textDecoration: "none",
                   }}
                 >
-                  Join the waitlist →
+                  Get 70% off →
                 </Link>
               </div>
             </div>

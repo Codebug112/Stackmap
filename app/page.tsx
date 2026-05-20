@@ -1256,7 +1256,7 @@ function FooterCTA() {
             links={[
               { label: "How it works", href: "/#how-it-works" },
               { label: "Features", href: "/#features" },
-              { label: "Join waitlist", href: "/#hero-form" },
+              { label: "Get 70% off", href: "/#hero-form" },
             ]}
           />
 

@@ -156,7 +156,7 @@ export function Nav() {
               (e.currentTarget as HTMLButtonElement).style.animation = "wl-bob 1.8s ease-in-out infinite";
             }}
           >
-            Join waitlist →
+            Get 70% off →
           </button>
 
           {/* Hamburger — mobile only */}
@@ -270,7 +270,7 @@ export function Nav() {
               cursor: "pointer",
             }}
           >
-            Join waitlist →
+            Get 70% off →
           </button>
         </div>
       )}

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { Nav } from "@/components/Nav";
 import { StakmapIcon } from "@/components/StakmapIcon";
 
 export default function JoinPage() {
@@ -44,22 +45,7 @@ export default function JoinPage() {
         backgroundSize: "48px 48px", opacity: 0.25,
       }} />
 
-      {/* Nav */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "18px 40px",
-        background: "rgba(8,12,16,0.88)", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid var(--border)",
-      }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "var(--text-bright)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.5px" }}>
-          <StakmapIcon size={20} />
-          Stakmap
-        </a>
-        <Link href="/blog" style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dim)", textDecoration: "none", letterSpacing: "0.3px" }}>
-          Blog
-        </Link>
-      </nav>
+      <Nav />
 
       {/* Main content */}
       <div style={{
@@ -98,17 +84,17 @@ export default function JoinPage() {
           ) : (
             <>
               <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--accent)", letterSpacing: "2px", textAlign: "center", marginBottom: 12 }}>
-                // JOIN WAITLIST
+                // LIMITED OFFER
               </div>
               <h1 style={{
                 fontFamily: "var(--font-inter)", fontSize: 26, fontWeight: 800,
                 color: "var(--text-bright)", letterSpacing: "-0.8px", textAlign: "center",
                 marginBottom: 8, lineHeight: 1.2,
               }}>
-                Get early access to Stakmap
+                Get 70% off Stakmap
               </h1>
               <p style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-dim)", textAlign: "center", marginBottom: 28, lineHeight: 1.6 }}>
-                Be first to know when we launch. No spam, one email when access opens.
+                Join the waitlist and lock in 70% off for life when we launch. No spam, one email when access opens.
               </p>
 
               <input
@@ -138,7 +124,7 @@ export default function JoinPage() {
                   opacity: status === "loading" ? 0.7 : 1, transition: "opacity 0.2s",
                 }}
               >
-                {status === "loading" ? "Adding you..." : "Add to waitlist →"}
+                {status === "loading" ? "Locking in your discount..." : "Get 70% off →"}
               </button>
 
               {status === "error" && (
@@ -176,6 +162,39 @@ export default function JoinPage() {
             </a>
           </div>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div style={{
+        borderTop: "1px solid var(--border)",
+        padding: "28px 24px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        fontFamily: "var(--font-mono)",
+        fontSize: 11,
+        color: "var(--text-dim)",
+        maxWidth: 1100,
+        marginLeft: "auto",
+        marginRight: "auto",
+        position: "relative",
+        zIndex: 1,
+      }}>
+        <div style={{
+          fontFamily: "var(--font-inter)",
+          fontSize: 15,
+          fontWeight: 800,
+          color: "var(--text-bright)",
+          letterSpacing: "-0.5px",
+          display: "flex",
+          alignItems: "center",
+          gap: 7,
+        }}>
+          <StakmapIcon size={16} />
+          Stakmap
+        </div>
+        <div>© 2026 Stakmap. All rights reserved.</div>
+        <div>Built for founders who&apos;ve been burned.</div>
       </div>
     </div>
   );
