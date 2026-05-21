@@ -242,7 +242,27 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 #toast span{color:var(--accent)}
 
 /* EMAIL CAPTURE OVERLAY */
-#email-overlay{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(8,12,16,.92);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .3s}
+#email-overlay{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(8,12,16,.72);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .4s}
+
+/* GUIDE TOOLTIP */
+#guide-box{position:absolute;bottom:56px;left:20px;z-index:60;background:var(--surface2);border:1px solid var(--accent-mid);border-radius:12px;padding:16px 18px;width:244px;box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 20px rgba(0,229,160,.06);opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s;pointer-events:none}
+#guide-box.show{opacity:1;transform:translateY(0);pointer-events:all}
+.guide-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.guide-tag{font-family:var(--font-mono);font-size:8px;color:var(--accent);letter-spacing:2px}
+.guide-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:0;line-height:1;transition:color .15s}
+.guide-close:hover{color:var(--text-bright)}
+.guide-step{display:none}
+.guide-step.active{display:block}
+.guide-num{font-family:var(--font-mono);font-size:9px;color:var(--text-dim);margin-bottom:5px}
+.guide-title{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--text-bright);margin-bottom:5px}
+.guide-desc{font-family:var(--font-body);font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:12px}
+.guide-dots{display:flex;gap:5px;margin-bottom:12px}
+.guide-dot{width:5px;height:5px;border-radius:50%;background:var(--border-bright);transition:background .3s}
+.guide-dot.active{background:var(--accent)}
+.guide-btn{background:var(--accent);color:#000;border:none;border-radius:6px;padding:8px 14px;font-family:var(--font-display);font-weight:700;font-size:11px;cursor:pointer;transition:opacity .15s;width:100%}
+.guide-btn:hover{opacity:.85}
+#guide-pulse-ring{transform-box:fill-box;transform-origin:center;animation:guide-ring-pulse 1.8s ease-out infinite}
+@keyframes guide-ring-pulse{0%{transform:scale(1);opacity:.9}60%{transform:scale(1.5);opacity:.4}100%{transform:scale(2);opacity:0}}
 #email-overlay.open{opacity:1;pointer-events:all}
 #email-overlay .skip-btn{position:absolute;top:20px;right:24px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:color .15s;padding:4px 8px}
 #email-overlay .skip-btn:hover{color:var(--text)}
@@ -388,7 +408,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 
 <!-- TOP BANNER -->
 <div id="demo-banner">
-  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <a href="/join" style="color:var(--accent);text-decoration:none">Get 70% off</a> when we launch.</div>
+  <div class="banner-text"><strong>// INTERACTIVE DEMO</strong> &nbsp;— <span style="color:var(--warn)">Simulated data only.</span> Real product connects directly to your APIs. <span style="color:var(--danger)">⏰ Limited time:</span> <a href="/join" style="color:var(--accent);text-decoration:none">get 70% off</a> when we launch.</div>
   <a class="banner-btn" href="/join">Get 70% off &rarr;</a>
 </div>
 
@@ -523,6 +543,28 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <button class="map-ctrl-btn" onclick="resetZoom()" style="font-size:10px">&#8857;</button>
           </div>
         </div>
+        <!-- GUIDE TOOLTIP -->
+        <div id="guide-box">
+          <div class="guide-header">
+            <span class="guide-tag">// HOW TO USE</span>
+            <button class="guide-close" onclick="dismissGuide()">&#215;</button>
+          </div>
+          <div class="guide-step active" id="guide-step-1">
+            <div class="guide-num">[1 of 2]</div>
+            <div class="guide-title">Click a tool node</div>
+            <div class="guide-desc">Tap any circle on the map to see that tool's integration health, recent events, and AI fix recommendations.</div>
+            <div class="guide-dots"><span class="guide-dot active"></span><span class="guide-dot"></span></div>
+            <button class="guide-btn" onclick="showGuideStep(2)">Next &rarr;</button>
+          </div>
+          <div class="guide-step" id="guide-step-2">
+            <div class="guide-num">[2 of 2]</div>
+            <div class="guide-title">Click a connection line</div>
+            <div class="guide-desc">Tap any line between tools to diagnose that integration — see what's broken, why it broke, and exact steps to fix it.</div>
+            <div class="guide-dots"><span class="guide-dot"></span><span class="guide-dot active"></span></div>
+            <button class="guide-btn" onclick="dismissGuide()">Got it &#10003;</button>
+          </div>
+        </div>
+
         <div class="popup-card" id="popup-card">
           <div class="popup-header">
             <button onclick="closePopup()" style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:4px;padding:0;transition:color .15s" onmouseover="this.style.color='var(--text-bright)'" onmouseout="this.style.color='var(--text-dim)'">&#8592; Map</button>
@@ -544,20 +586,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 
 <!-- EMAIL CAPTURE OVERLAY -->
 <div id="email-overlay">
-  <button class="skip-btn" onclick="skipEmailCapture()">Skip &rarr;</button>
+  <button class="skip-btn" onclick="skipEmailCapture()">Maybe later</button>
   <div class="email-capture-box">
-    <div class="ec-tag">// JOIN THE WAITLIST</div>
-    <h2>Get early access<br>to Stakmap.</h2>
-    <p>Be first when we launch. No spam — one email when access opens.</p>
+    <div class="ec-tag" style="display:flex;align-items:center;justify-content:center;gap:6px">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--danger);display:inline-block;animation:node-pulse 1.2s infinite"></span>
+      LIMITED TIME — 70% OFF
+    </div>
+    <h2>Lock in 70% off<br>before we launch.</h2>
+    <p>Join the waitlist now and pay 70% less forever. This offer closes the moment we go public — no exceptions.</p>
     <div id="ec-form">
       <div class="ec-input-row">
         <input class="ec-input" id="ec-email" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')submitEmailCapture()"/>
         <button class="ec-submit" onclick="submitEmailCapture()">Get 70% off &rarr;</button>
       </div>
       <div class="ec-benefits">
-        <div class="ec-benefit">Free early access — before public launch</div>
-        <div class="ec-benefit">Founder member discount, locked in for life</div>
-        <div class="ec-benefit">Product updates as we build</div>
+        <div class="ec-benefit">70% off your plan — locked in for life</div>
+        <div class="ec-benefit">Free early access before public launch</div>
+        <div class="ec-benefit">Direct line to the founders</div>
       </div>
     </div>
     <div id="ec-success" style="display:none" class="ec-success">[ OK ] — You're on the list. Check your inbox.</div>
@@ -622,7 +667,7 @@ const CONN_DEFS=[
   {from:6,to:1,type:'unmonitored'},
 ];
 
-let selectedTools=[],currentStep=1,mapScale=1,domain='',popupExpanded=false,sidebarCollapsed=false;
+let selectedTools=[],currentStep=1,mapScale=1,domain='',popupExpanded=false,sidebarCollapsed=false,guideShown=false,guideEmailTimer=null,mapNodePositions=[];
 
 window.addEventListener('load',()=>{
   const urlDomain=new URLSearchParams(window.location.search).get('domain');
@@ -680,7 +725,7 @@ function goToStep3(){
     document.getElementById('sel-note').style.display='inline';
     setTimeout(()=>b.classList.remove('shake'),500);return;
   }
-  document.getElementById('email-overlay').classList.add('open');
+  showStep(3);runLoader();
 }
 function openWaitlistOverlay(){
   document.getElementById('ec-form').style.display='';
@@ -690,7 +735,6 @@ function openWaitlistOverlay(){
 }
 function skipEmailCapture(){
   document.getElementById('email-overlay').classList.remove('open');
-  showStep(3);runLoader();
 }
 async function submitEmailCapture(){
   const email=document.getElementById('ec-email').value.trim();
@@ -700,7 +744,7 @@ async function submitEmailCapture(){
     }catch(e){}
     document.getElementById('ec-form').style.display='none';
     document.getElementById('ec-success').style.display='block';
-    setTimeout(()=>{document.getElementById('email-overlay').classList.remove('open');showStep(3);runLoader();},1400);
+    setTimeout(()=>{document.getElementById('email-overlay').classList.remove('open');},1400);
   } else {
     skipEmailCapture();
   }
@@ -730,6 +774,54 @@ function buildAndShowMap(){
   showStep(4);buildSidebarToolList();buildMapSVG();
   const dd=document.getElementById('domain-display');
   if(dd)dd.textContent=domain||'yourcompany.com';
+  setTimeout(showGuide,1200);
+  guideEmailTimer=setTimeout(openWaitlistOverlay,13000);
+}
+
+function showGuide(){
+  if(guideShown)return;
+  guideShown=true;
+  // Pulsing ring on first tool node
+  if(mapNodePositions.length>1){
+    const nl=document.getElementById('nodes-layer');
+    const p=mapNodePositions[1];
+    const pr=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    pr.setAttribute('cx',p.x);pr.setAttribute('cy',p.y);pr.setAttribute('r','32');
+    pr.setAttribute('fill','none');pr.setAttribute('stroke','#00e5a0');pr.setAttribute('stroke-width','2');
+    pr.id='guide-pulse-ring';
+    nl.insertBefore(pr,nl.firstChild);
+  }
+  const g=document.getElementById('guide-box');
+  if(g)g.classList.add('show');
+}
+
+function showGuideStep(n){
+  document.querySelectorAll('.guide-step').forEach(s=>s.classList.remove('active'));
+  const s=document.getElementById('guide-step-'+n);
+  if(s)s.classList.add('active');
+  // Move pulse ring to a connection midpoint for step 2
+  const pr=document.getElementById('guide-pulse-ring');
+  if(pr)pr.parentNode.removeChild(pr);
+  if(n===2&&mapNodePositions.length>=2&&CONN_DEFS.length>0){
+    const c=CONN_DEFS.find(cd=>cd.from<selectedTools.length&&cd.to<selectedTools.length);
+    if(c){
+      const fp=mapNodePositions[c.from+1],tp=mapNodePositions[c.to+1];
+      const mx=(fp.x+tp.x)/2,my=(fp.y+tp.y)/2;
+      const cl2=document.getElementById('connections-layer');
+      const pr2=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      pr2.setAttribute('cx',mx);pr2.setAttribute('cy',my);pr2.setAttribute('r','14');
+      pr2.setAttribute('fill','none');pr2.setAttribute('stroke','#ff4d6a');pr2.setAttribute('stroke-width','2');
+      pr2.id='guide-pulse-ring';
+      cl2.appendChild(pr2);
+    }
+  }
+}
+
+function dismissGuide(){
+  const g=document.getElementById('guide-box');
+  if(g)g.classList.remove('show');
+  const pr=document.getElementById('guide-pulse-ring');
+  if(pr)pr.parentNode.removeChild(pr);
 }
 
 function getToolStatuses(){
@@ -785,6 +877,7 @@ function buildMapSVG(){
   const cl=document.getElementById('connections-layer'),nl=document.getElementById('nodes-layer');
   cl.innerHTML='';nl.innerHTML='';
   const pos=getNodePositions(),st=getToolStatuses();
+  mapNodePositions=pos;
   CONN_DEFS.filter(c=>c.from<selectedTools.length&&c.to<selectedTools.length)
     .forEach((c,ci)=>drawConnection(cl,pos[c.from+1],pos[c.to+1],c.type,ci,c));
   // YOU node
@@ -849,6 +942,7 @@ function drawToolNode(layer,pos,tool,init,status,idx){
 }
 
 function showPopup(type,data){
+  dismissGuide();
   const card=document.getElementById('popup-card'),body=document.getElementById('popup-body');
   if(type==='you'){body.innerHTML=buildOverviewCard();}
   else if(type==='node'){
