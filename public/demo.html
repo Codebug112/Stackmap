@@ -321,17 +321,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 }
 
 @media(max-width:768px){
-  /* Step 2: 3 cols */
+  /* Step 2: scrollable, not squished */
+  #step2{padding:52px 16px 80px;height:auto;min-height:100svh;overflow-y:auto}
   .tools-grid{grid-template-columns:repeat(3,1fr);gap:8px}
-  #step2{padding:52px 16px 12px}
-  .step2-footer{width:100%}
+  .step2-footer{width:100%;position:sticky;bottom:0;background:var(--bg);padding:10px 0 4px;z-index:5}
+  .tool-card{min-height:72px}
 
   /* App layout */
   .app-layout{padding-top:52px}
 
-  /* Sidebar: hidden offscreen, full-width drawer when open */
+  /* Sidebar: hidden offscreen, slides in as drawer — starts BELOW the banner */
   .sidebar{
-    position:fixed;top:0;bottom:0;left:0;
+    position:fixed;top:52px;bottom:0;left:0;
     z-index:150;
     width:260px!important;min-width:260px!important;
     transform:translateX(-100%);
@@ -358,6 +359,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
   /* Banner */
   #demo-banner{height:auto;padding:7px 14px;flex-wrap:wrap;gap:6px}
   .banner-text{font-size:10px;line-height:1.5}
+
+  /* Prevent iOS auto-zoom on input focus */
+  input,select,textarea{font-size:16px!important}
 }
 
 @media(max-width:480px){
@@ -368,10 +372,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
   .domain-input{border-radius:8px 8px 0 0;border:1px solid var(--border-bright)}
   .scan-btn{border-radius:0 0 8px 8px;border-top:1px solid rgba(0,0,0,.2)}
 
-  /* Step 2 */
-  .tools-grid{grid-template-columns:repeat(3,1fr);gap:6px}
-  .tool-name{font-size:9px}
-  .tool-avatar{width:28px;height:28px;font-size:9px}
+  /* Step 2: 2 columns on phone so cards aren't tiny */
+  .tools-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .tool-card{min-height:80px}
+  .tool-name{font-size:10px}
+  .tool-avatar{width:32px;height:32px;font-size:10px}
   .step2-footer{gap:10px}
 
   /* Banner: hide text on smallest screens, keep button */

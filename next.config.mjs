@@ -34,6 +34,14 @@ const nextConfig = {
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },
+  // 301s so Google doesn't see the raw .html files as separate pages
+  async redirects() {
+    return [
+      { source: "/demo.html", destination: "/demo", permanent: true },
+      { source: "/blog-post-1.html", destination: "/blog/how-to-monitor-saas-integrations", permanent: true },
+      { source: "/blog-post-2.html", destination: "/blog/webhook-not-firing", permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       { source: "/demo", destination: "/demo.html" },
